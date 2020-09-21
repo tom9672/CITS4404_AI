@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
@@ -38,7 +40,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -49,9 +53,20 @@ import com.google.maps.android.heatmaps.WeightedLatLng;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Collections.max;
+import static java.util.Collections.min;
 
 public class DashboardFragment extends Fragment implements GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
-
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private List<Object> myList = new ArrayList<>();
+    private LatLngBounds AREA;
+    private double southLatitude;
+    private double westLongitude;
+    private double northLatitude;
+    private double eastLongitude;
     private GoogleMap mMap;
     public DashboardFragment() {
 
@@ -89,6 +104,50 @@ public class DashboardFragment extends Fragment implements GoogleMap.OnMyLocatio
             }
 
         }
+
+        db.collection("snail-detection").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                myList.clear();
+
+                for(DocumentSnapshot snapshot : value){
+
+                    if(snapshot.getBoolean("HaveSnail")){
+                        List<Object> myList_each = new ArrayList<>();
+                        //myList_each.add("DateTime: "+snapshot.getDate("DateTime"));
+                        //myList_each.add("\nNumberofSnails: "+snapshot.get("NumberofSnails"));
+                        myList_each.add(snapshot.getDouble("longitude"));
+                        myList_each.add(snapshot.getDouble("latitude"));
+                        System.out.println(myList_each);
+                        myList.add(myList_each);
+
+                    }
+
+
+
+                }
+                List<Double> Longitudes = new ArrayList<>();
+                List<Double> Latitudes = new ArrayList<>();
+                //System.out.println(myList);
+                for(Object l : myList){
+                    Longitudes.add((Double) ((ArrayList) l).get(0));
+                    Latitudes.add((Double) ((ArrayList) l).get(1));
+                }
+                System.out.println("Latitudes:" + Latitudes);
+                System.out.println("Longitudes:" + Longitudes);
+
+                southLatitude = Collections.min(Latitudes);
+                northLatitude = Collections.max(Latitudes);
+
+                westLongitude = Collections.min(Longitudes);
+                eastLongitude = Collections.max(Longitudes);
+
+                System.out.println(southLatitude+"/"+westLongitude);
+                System.out.println(northLatitude+"/"+eastLongitude);
+
+            }
+
+        });
 
         return root;
     }
@@ -146,6 +205,7 @@ public class DashboardFragment extends Fragment implements GoogleMap.OnMyLocatio
                                 Log.d("TAG", longitude[0] + " " + latitude[0] + " " + numberofsnails[0]);
                                 ArrayList<WeightedLatLng> list = new ArrayList<WeightedLatLng>();
                                 list.add(new WeightedLatLng(new LatLng(latitude[0], longitude[0]), numberofsnails[0]));
+
                                 buildheatmap(list);
                             } else {
                                 Log.d("TAG", "Error getting documents: ", task.getException());
@@ -167,5 +227,13 @@ public class DashboardFragment extends Fragment implements GoogleMap.OnMyLocatio
         TileOverlay tileoverlay = mMap.addTileOverlay(tileoverlayoptions);
         tileoverlay.clearTileCache();
         Toast.makeText(getActivity(),"added heatmap",Toast.LENGTH_SHORT).show();
+
+        System.out.println(list);
+        AREA = new LatLngBounds(
+                new LatLng(southLatitude, westLongitude), new LatLng(northLatitude, eastLongitude));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(AREA,0));
     }
+
+
+
 }

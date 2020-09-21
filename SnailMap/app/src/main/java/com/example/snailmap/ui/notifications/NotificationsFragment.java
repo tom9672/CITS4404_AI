@@ -48,7 +48,7 @@ public class NotificationsFragment extends Fragment {
                 for(DocumentSnapshot snapshot : value){
 
                     if(snapshot.getBoolean("HaveSnail")){
-                        List<Object> myList_each = myList_each = new ArrayList<>();
+                        List<Object> myList_each = new ArrayList<>();
                         myList_each.add("DateTime: "+snapshot.getDate("DateTime"));
                         myList_each.add("\nNumberofSnails: "+snapshot.get("NumberofSnails"));
                         myList_each.add("\nCoordinate: "+snapshot.getDouble("longitude"));
