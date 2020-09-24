@@ -1,0 +1,128 @@
+{
+"waterTakeData":
+[
+  {"id": "0",
+    "time": "September 05, 2020 00:00:00",
+    "distance": "5"
+  },
+  {"id": "1",
+    "time": "September 05, 2020 01:00:00",
+    "distance": "6"
+  },
+  {
+    "id": "2",
+    "time": "September 05, 2020 02:00:00",
+    "distance": "7"
+  },
+  {
+    "id": "3",
+    "time": "September 05, 2020 03:00:00",
+    "distance": "8"
+  },  
+  {
+    "id": "4",
+    "time": "September 05, 2020 04:00:00",
+    "distance": "10"
+  },
+  {
+    "id": "5",
+    "time": "September 05, 2020 05:00:00",
+    "distance": "15"
+  },
+  {
+    "id": "6",
+    "time": "September 05, 2020 06:00:00",
+    "distance": "16"
+  },
+  {
+    "id": "7",
+    "time": "September 05, 2020 07:00:00",
+    "distance": "18"
+  },
+  {
+    "id": "8",
+    "time": "September 05, 2020 08:00:00",
+    "distance": "18"
+  },
+  {
+    "id": "9",
+    "time": "September 05, 2020 09:00:00",
+    "distance": "18"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 10:00:00",
+    "distance": "18.5"
+  },
+  {
+    "id": "10",
+    "time": "September 05, 2020 11:00:00",
+    "distance": "19"
+  }
+]
+}
